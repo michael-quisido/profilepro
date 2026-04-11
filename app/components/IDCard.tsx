@@ -19,6 +19,10 @@ interface ProfileData {
   };
 }
 
+interface IDCardProps {
+  customContent?: React.ReactNode;
+}
+
 const defaultProfile: ProfileData = {
   photo: "/images/mommy_200x200.jpg",
   name: "Jhona Aima C. Quisido",
@@ -33,11 +37,12 @@ const defaultProfile: ProfileData = {
   },
 };
 
-export default function IDCard() {
+export default function IDCard({ customContent }: IDCardProps) {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [profile, setProfile] = useState<ProfileData | null>(null);
+  const [pageContent, setPageContent] = useState<{ projects: string[]; about: string; contact: string } | null>(null);
 
   useEffect(() => {
     const stored = localStorage.getItem('profileData');
@@ -55,6 +60,13 @@ export default function IDCard() {
   }, []);
 
   useEffect(() => {
+    const stored = localStorage.getItem('pageContent');
+    if (stored) {
+      setPageContent(JSON.parse(stored));
+    }
+  }, []);
+
+  useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth <= 768);
     };
@@ -63,16 +75,16 @@ export default function IDCard() {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
+  if (!profile) {
+    return null;
+  }
+
   const menuItems = [
     { name: "Home", href: "/" },
     { name: "Projects", href: "/projects" },
     { name: "About me", href: "/about" },
     { name: "Contact me", href: "/contact" },
   ];
-
-  if (!profile) {
-    return null;
-  }
 
   const socialIcons = [
     { name: "Facebook", url: profile.socialLinks.facebook, icon: FaFacebook },
@@ -123,22 +135,24 @@ export default function IDCard() {
             
             <p style={{ fontSize: '16px', color: '#666', fontStyle: 'italic' }}>{profile.title}</p>
             
-            <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', flexWrap: 'wrap' }}>
-              {socialIcons.map((social) => (
-                social.url && (
-                  <a 
-                    key={social.name}
-                    href={social.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="social-icon"
-                    style={{ width: '40px', height: '40px' }}
-                  >
-                    {social.icon && <social.icon size={20} />}
-                  </a>
-                )
-              ))}
-            </div>
+            {customContent ? customContent : (
+              <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', flexWrap: 'wrap' }}>
+                {socialIcons.map((social) => (
+                  social.url && (
+                    <a 
+                      key={social.name}
+                      href={social.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="social-icon"
+                      style={{ width: '40px', height: '40px' }}
+                    >
+                      {social.icon && <social.icon size={20} />}
+                    </a>
+                  )
+                ))}
+              </div>
+            )}
             
             <div style={{ width: '100%', textAlign: 'right' }}>
               <p style={{ fontSize: '14px', color: '#333' }}>{profile.email}</p>
@@ -190,21 +204,27 @@ export default function IDCard() {
                 </div>
               </div>
 
-              <div style={{ display: 'flex', justifyContent: 'center', gap: '15px', marginTop: '30px', flexWrap: 'wrap' }}>
-                {socialIcons.map((social) => (
-                  social.url && (
-                    <a 
-                      key={social.name}
-                      href={social.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="social-icon"
-                    >
-                      {social.icon && <social.icon size={28} />}
-                    </a>
-                  )
-                ))}
-              </div>
+              {customContent ? (
+                <div style={{ marginTop: '30px', textAlign: 'center', maxWidth: '500px', margin: '30px auto 0' }}>
+                  {customContent}
+                </div>
+              ) : (
+                <div style={{ display: 'flex', justifyContent: 'center', gap: '15px', marginTop: '30px', flexWrap: 'wrap' }}>
+                  {socialIcons.map((social) => (
+                    social.url && (
+                      <a 
+                        key={social.name}
+                        href={social.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="social-icon"
+                      >
+                        {social.icon && <social.icon size={28} />}
+                      </a>
+                    )
+                  ))}
+                </div>
+              )}
 
               <div className="email-section" style={{ textAlign: 'right', marginTop: '20px' }}>
                 <p style={{ fontSize: '14px', color: '#333' }}>{profile.email}</p>

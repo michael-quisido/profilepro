@@ -128,7 +128,7 @@ export default function IDCard({ customContent }: IDCardProps) {
               src={profile.photo} 
               alt={profile.name}
               className="owner-photo"
-              style={{ width: '150px', height: '150px', borderRadius: '10px', objectFit: 'cover' }}
+              style={{ width: '150px', height: '150px', borderRadius: '10px', objectFit: 'cover', border: '1px solid #333' }}
             />
             
             <h2 style={{ fontSize: '20px', fontWeight: 'bold', color: '#333' }}>{profile.name}</h2>
@@ -195,7 +195,7 @@ export default function IDCard({ customContent }: IDCardProps) {
                   src={profile.photo} 
                   alt={profile.name}
                   className="owner-photo"
-                  style={{ width: '150px', height: '150px', borderRadius: '10px', objectFit: 'cover', flexShrink: 0 }}
+                  style={{ width: '150px', height: '150px', borderRadius: '10px', objectFit: 'cover', flexShrink: 0, border: '1px solid #333' }}
                 />
                 
                 <div className="info-section" style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '70px' }}>

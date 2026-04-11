@@ -33,7 +33,16 @@ export default function AdminDashboard() {
     },
   });
   const [saved, setSaved] = useState(false);
+  const [creds, setCreds] = useState({ username: "admin", password: "admin123" });
+  const [credsSaved, setCredsSaved] = useState(false);
   const router = useRouter();
+
+  useEffect(() => {
+    const stored = localStorage.getItem('adminCreds');
+    if (stored) {
+      setCreds(JSON.parse(stored));
+    }
+  }, []);
 
   const handleSave = async () => {
     await fetch("/api/profile", {
@@ -41,8 +50,15 @@ export default function AdminDashboard() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(profile),
     });
+    localStorage.setItem('profileData', JSON.stringify(profile));
     setSaved(true);
     setTimeout(() => setSaved(false), 2000);
+  };
+
+  const handleCredsSave = () => {
+    localStorage.setItem('adminCreds', JSON.stringify(creds));
+    setCredsSaved(true);
+    setTimeout(() => setCredsSaved(false), 2000);
   };
 
   const handleLogout = () => {
@@ -185,6 +201,48 @@ export default function AdminDashboard() {
               Save Changes
             </button>
             {saved && <span style={{ color: "green" }}>Saved successfully!</span>}
+          </div>
+        </div>
+
+        <h2 style={{ margin: "40px 0 30px", color: "#333" }}>Change Username & Password</h2>
+        
+        <div style={{ background: "white", padding: "30px", borderRadius: "15px" }}>
+          <div style={{ marginBottom: "20px" }}>
+            <label style={{ display: "block", marginBottom: "5px", color: "#333", fontWeight: "600" }}>Username</label>
+            <input
+              type="text"
+              value={creds.username}
+              onChange={(e) => setCreds({ ...creds, username: e.target.value })}
+              style={{ width: "100%", padding: "10px", border: "1px solid #ddd", borderRadius: "8px" }}
+            />
+          </div>
+
+          <div style={{ marginBottom: "20px" }}>
+            <label style={{ display: "block", marginBottom: "5px", color: "#333", fontWeight: "600" }}>Password</label>
+            <input
+              type="password"
+              value={creds.password}
+              onChange={(e) => setCreds({ ...creds, password: e.target.value })}
+              style={{ width: "100%", padding: "10px", border: "1px solid #ddd", borderRadius: "8px" }}
+            />
+          </div>
+
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <button
+              onClick={handleCredsSave}
+              style={{
+                padding: "12px 30px",
+                background: "#c9a227",
+                color: "white",
+                border: "none",
+                borderRadius: "8px",
+                cursor: "pointer",
+                fontSize: "16px"
+              }}
+            >
+              Save Credentials
+            </button>
+            {credsSaved && <span style={{ color: "green" }}>Saved successfully!</span>}
           </div>
         </div>
       </div>

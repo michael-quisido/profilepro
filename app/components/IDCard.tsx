@@ -33,10 +33,26 @@ const defaultProfile: ProfileData = {
   },
 };
 
-export default function IDCard({ profile = defaultProfile }: { profile?: ProfileData }) {
+export default function IDCard() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [profile, setProfile] = useState<ProfileData | null>(null);
+
+  useEffect(() => {
+    const stored = localStorage.getItem('profileData');
+    if (stored) {
+      setProfile(JSON.parse(stored));
+    } else {
+      fetch('/api/profile')
+        .then(res => res.json())
+        .then(data => {
+          setProfile(data);
+          localStorage.setItem('profileData', JSON.stringify(data));
+        })
+        .catch(() => setProfile(defaultProfile));
+    }
+  }, []);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -53,6 +69,10 @@ export default function IDCard({ profile = defaultProfile }: { profile?: Profile
     { name: "About me", href: "/about" },
     { name: "Contact me", href: "/contact" },
   ];
+
+  if (!profile) {
+    return null;
+  }
 
   const socialIcons = [
     { name: "Facebook", url: profile.socialLinks.facebook, icon: FaFacebook },

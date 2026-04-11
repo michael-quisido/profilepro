@@ -64,14 +64,6 @@ export default function IDCard({ profile = defaultProfile }: { profile?: Profile
 
   return (
     <>
-      {isMobile && (
-        <button className="burger-menu" onClick={() => setMenuOpen(true)}>
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
-      )}
-
       {menuOpen && (
         <div className="mobile-menu active">
           <span className="close-btn" onClick={() => setMenuOpen(false)}>×</span>
@@ -88,20 +80,18 @@ export default function IDCard({ profile = defaultProfile }: { profile?: Profile
       )}
 
       {isMobile ? (
-        <div className="id-card" style={{ marginTop: '80px' }}>
+        <div className="id-card" style={{ marginTop: '80px', position: 'relative' }}>
+          <button 
+            className="burger-menu" 
+            onClick={() => setMenuOpen(true)}
+            style={{ position: 'absolute', top: '10px', left: '10px', display: 'block', zIndex: 10 }}
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+          
           <div style={{ padding: '30px 20px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px' }}>
-            <nav className="desktop-menu" style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', justifyContent: 'center', marginBottom: '10px' }}>
-              {menuItems.map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className={`menu-item ${pathname === item.href ? 'active' : ''}`}
-                >
-                  {item.name}
-                </Link>
-              ))}
-            </nav>
-            
             <img 
               src={profile.photo} 
               alt={profile.name}

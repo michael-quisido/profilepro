@@ -251,7 +251,7 @@ body {
     width: 95%;
     min-height: auto;
     padding: 20px;
-    margin-top: 60px;
+    margin-top: 0px;
   }
   
   .id-card .burger-menu {
@@ -262,7 +262,7 @@ body {
     background: #333;
     border-radius: 5px;
     padding: 8px;
-    margin-bottom: 100px;
+    margin-bottom: 60px;
   }
   
   .id-card .burger-menu span {
@@ -271,7 +271,7 @@ body {
   }
   
   .id-card .burger-menu + * {
-    margin-top: 100px;
+    margin-top: 40px;
   }
   
   .id-card-content {

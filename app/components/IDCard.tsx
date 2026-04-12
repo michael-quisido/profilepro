@@ -112,7 +112,7 @@ export default function IDCard({ customContent }: IDCardProps) {
       )}
 
       {isMobile ? (
-        <div className="id-card" style={{ marginTop: '80px', position: 'relative' }}>
+        <div className="id-card" style={{ marginTop: '0px', position: 'relative' }}>
           <button 
             className="burger-menu" 
             onClick={() => setMenuOpen(true)}
@@ -123,7 +123,7 @@ export default function IDCard({ customContent }: IDCardProps) {
             <span></span>
           </button>
           
-          <div style={{ padding: '30px 20px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px' }}>
+          <div style={{ padding: '40px 20px 20px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px' }}>
             <div style={{ position: 'relative', display: 'inline-block' }}>
               <img 
                 src={profile.photo} 
@@ -182,12 +182,9 @@ export default function IDCard({ customContent }: IDCardProps) {
               </div>
             )}
             
-            <div style={{ width: '100%', textAlign: 'right' }}>
-              <p style={{ fontSize: '14px', color: '#333' }}>{profile.email}</p>
-            </div>
-            
-            <div style={{ width: '100%', textAlign: 'right' }}>
-              <p style={{ fontSize: '12px', color: '#888' }}>Powered by: kmcq-whs.agila</p>
+            <div style={{ marginTop: '10px', width: '100%' }}>
+              <p style={{ fontSize: '14px', color: '#333', textAlign: 'right' }}>{profile.email}</p>
+              <p style={{ fontSize: '12px', color: '#888', textAlign: 'right', marginTop: '2px' }}>Powered by: kmcq-whs.agila</p>
             </div>
           </div>
         </div>
@@ -206,7 +203,8 @@ export default function IDCard({ customContent }: IDCardProps) {
             }} />
             
             <div style={{ padding: '0 30px', position: 'relative' }}>
-              <nav className="desktop-menu" style={{ display: 'flex', justifyContent: 'center', gap: '20px', marginBottom: '30px', paddingTop: '30px' }}>
+              <img src="/images/nailed-it.png" alt="nail" style={{ display: 'block', margin: '0 auto', maxWidth: '40px' }} />
+              <nav className="desktop-menu" style={{ display: 'flex', justifyContent: 'center', gap: '20px', marginBottom: '30px', paddingTop: '0px' }}>
                 {menuItems.map((item) => (
                   <Link
                     key={item.name}
@@ -282,11 +280,11 @@ export default function IDCard({ customContent }: IDCardProps) {
                 </div>
               )}
 
-              <div className="email-section" style={{ textAlign: 'right', marginTop: '20px' }}>
+              <div className="email-section" style={{ textAlign: 'right', marginTop: '30px' }}>
                 <p style={{ fontSize: '14px', color: '#333' }}>{profile.email}</p>
               </div>
 
-              <div className="powered-section" style={{ textAlign: 'right', marginTop: '10px', marginBottom: '20px' }}>
+              <div className="powered-section" style={{ textAlign: 'right', marginTop: '2px', marginBottom: '20px' }}>
                 <p style={{ fontSize: '12px', color: '#888' }}>Powered by: kmcq-whs.agila</p>
               </div>
             </div>

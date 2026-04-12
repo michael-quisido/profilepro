@@ -185,7 +185,7 @@ body {
   z-index: 1;
 }
 
-.snake-path {
+.circle-path {
   position: absolute;
   top: -3px;
   left: -3px;
@@ -198,11 +198,11 @@ body {
   overflow: visible;
 }
 
-.snake {
+.circle-first {
   display: none;
 }
 
-@keyframes snakeRunClockwise {
+@keyframes circleRunClockwise {
   0% {
     transform: translate(0px, 0px) rotate(0deg);
   }
@@ -220,11 +220,11 @@ body {
   }
 }
 
-.snake-second {
+.circle-first-second {
   display: none;
 }
 
-@keyframes snakeRunCounterClockwise {
+@keyframes circleRunCounterClockwise {
   0% {
     transform: translate(0px, 0px) rotate(0deg);
   }
@@ -239,42 +239,6 @@ body {
   }
   100% {
     transform: translate(0px, 0px) rotate(-360deg);
-  }
-}
-
-@keyframes snakeRun {
-  0% {
-    transform: translate(3px, 3px) rotate(0deg);
-  }
-  25% {
-    transform: translate(146px, 3px) rotate(90deg);
-  }
-  50% {
-    transform: translate(146px, 146px) rotate(180deg);
-  }
-  75% {
-    transform: translate(3px, 146px) rotate(270deg);
-  }
-  100% {
-    transform: translate(3px, 3px) rotate(360deg);
-  }
-}
-
-@keyframes snakeRunReverse {
-  0% {
-    transform: translate(146px, 146px) rotate(0deg);
-  }
-  25% {
-    transform: translate(3px, 146px) rotate(90deg);
-  }
-  50% {
-    transform: translate(3px, 3px) rotate(180deg);
-  }
-  75% {
-    transform: translate(146px, 3px) rotate(270deg);
-  }
-  100% {
-    transform: translate(146px, 146px) rotate(360deg);
   }
 }
 

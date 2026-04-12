@@ -131,7 +131,7 @@ export default function IDCard({ customContent }: IDCardProps) {
                 className="owner-photo"
                 style={{ width: '150px', height: '150px', borderRadius: '10px', objectFit: 'cover', border: '1px solid #333', display: 'block' }}
               />
-              <div className="snake-path">
+              <div className="circle-path">
                 <div style={{ 
                   width: '7px', 
                   height: '7px', 
@@ -140,7 +140,7 @@ export default function IDCard({ customContent }: IDCardProps) {
                   position: 'absolute', 
                   top: 0, 
                   left: 0,
-                  animation: 'snakeRunClockwise 3s linear infinite',
+                  animation: 'circleRunClockwise 3s linear infinite',
                   boxShadow: '0 0 8px #c9a227',
                   zIndex: 999998
                 }}></div>
@@ -152,7 +152,7 @@ export default function IDCard({ customContent }: IDCardProps) {
                   position: 'absolute', 
                   top: 0, 
                   left: 0,
-                  animation: 'snakeRunCounterClockwise 3s linear infinite',
+                  animation: 'circleRunCounterClockwise 3s linear infinite',
                   boxShadow: '0 0 8px #c9a227',
                   zIndex: 999999
                 }}></div>
@@ -226,7 +226,7 @@ export default function IDCard({ customContent }: IDCardProps) {
                     className="owner-photo"
                     style={{ width: '150px', height: '150px', borderRadius: '10px', objectFit: 'cover', border: '1px solid #333', display: 'block' }}
                   />
-                  <div className="snake-path">
+                  <div className="circle-path">
                     <div style={{ 
                       width: '7px', 
                       height: '7px', 
@@ -235,7 +235,7 @@ export default function IDCard({ customContent }: IDCardProps) {
                       position: 'absolute', 
                       top: 0, 
                       left: 0,
-                      animation: 'snakeRunClockwise 3s linear infinite',
+                      animation: 'circleRunClockwise 3s linear infinite',
                       boxShadow: '0 0 8px #c9a227',
                       zIndex: 999998
                     }}></div>
@@ -247,7 +247,7 @@ export default function IDCard({ customContent }: IDCardProps) {
                       position: 'absolute', 
                       top: 0, 
                       left: 0,
-                      animation: 'snakeRunCounterClockwise 3s linear infinite',
+                      animation: 'circleRunCounterClockwise 3s linear infinite',
                       boxShadow: '0 0 8px #c9a227',
                       zIndex: 999999
                     }}></div>

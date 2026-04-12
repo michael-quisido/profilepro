@@ -21,6 +21,7 @@ body {
   color: #333;
   min-height: 100vh;
   overflow-x: hidden;
+  overflow-y: auto;
 }
 
 @keyframes swing {
@@ -35,13 +36,15 @@ body {
 .swing-animation {
   animation: swing 3s ease-in-out forwards;
   transform-origin: top center;
+  overflow: visible;
+  position: relative;
 }
 
 .brick-wall {
   min-height: 100vh;
-  height: 100vh;
+  height: auto;
   position: relative;
-  overflow: hidden;
+  overflow-y: auto;
 }
 
 .brick-wall::before {
@@ -66,7 +69,7 @@ body {
   box-shadow: 
     0 10px 30px rgba(0,0,0,0.3),
     inset 0 0 0 2px rgba(255,255,255,0.5);
-  overflow: hidden;
+  overflow: visible;
   position: relative;
 }
 
@@ -172,6 +175,109 @@ body {
   cursor: pointer;
 }
 
+.owner-photo {
+  width: 150px;
+  height: 150px;
+  border-radius: 10px;
+  object-fit: cover;
+  border: 1px solid #333;
+  position: relative;
+  z-index: 1;
+}
+
+.snake-path {
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  width: 156px;
+  height: 156px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  pointer-events: none;
+  z-index: 99999 !important;
+  overflow: visible;
+}
+
+.snake {
+  display: none;
+}
+
+@keyframes snakeRunClockwise {
+  0% {
+    transform: translate(0px, 0px) rotate(0deg);
+  }
+  25% {
+    transform: translate(150px, 0px) rotate(90deg);
+  }
+  50% {
+    transform: translate(150px, 150px) rotate(180deg);
+  }
+  75% {
+    transform: translate(0px, 150px) rotate(270deg);
+  }
+  100% {
+    transform: translate(0px, 0px) rotate(360deg);
+  }
+}
+
+.snake-second {
+  display: none;
+}
+
+@keyframes snakeRunCounterClockwise {
+  0% {
+    transform: translate(0px, 0px) rotate(0deg);
+  }
+  25% {
+    transform: translate(0px, 150px) rotate(-90deg);
+  }
+  50% {
+    transform: translate(150px, 150px) rotate(-180deg);
+  }
+  75% {
+    transform: translate(150px, 0px) rotate(-270deg);
+  }
+  100% {
+    transform: translate(0px, 0px) rotate(-360deg);
+  }
+}
+
+@keyframes snakeRun {
+  0% {
+    transform: translate(3px, 3px) rotate(0deg);
+  }
+  25% {
+    transform: translate(146px, 3px) rotate(90deg);
+  }
+  50% {
+    transform: translate(146px, 146px) rotate(180deg);
+  }
+  75% {
+    transform: translate(3px, 146px) rotate(270deg);
+  }
+  100% {
+    transform: translate(3px, 3px) rotate(360deg);
+  }
+}
+
+@keyframes snakeRunReverse {
+  0% {
+    transform: translate(146px, 146px) rotate(0deg);
+  }
+  25% {
+    transform: translate(3px, 146px) rotate(90deg);
+  }
+  50% {
+    transform: translate(3px, 3px) rotate(180deg);
+  }
+  75% {
+    transform: translate(146px, 3px) rotate(270deg);
+  }
+  100% {
+    transform: translate(146px, 146px) rotate(360deg);
+  }
+}
+
 @media (max-width: 768px) {
   .desktop-menu {
     display: none;
@@ -204,24 +310,11 @@ body {
     margin-top: 100px;
   }
   
-  .id-card .burger-menu span {
-    background: white;
-    margin: 4px 0;
-  }
-  
   .id-card-content {
     flex-direction: column;
     align-items: center;
     text-align: center;
   }
-  
-.owner-photo {
-  width: 150px;
-  height: 150px;
-  border-radius: 10px;
-  object-fit: cover;
-  border: 1px solid #333;
-}
   
   .social-icon {
     width: 40px;
@@ -236,5 +329,11 @@ body {
   
   .email-section, .powered-section {
     text-align: center !important;
+  }
+  
+  .brick-wall {
+    min-height: 100vh;
+    height: auto;
+    overflow-y: auto;
   }
 }

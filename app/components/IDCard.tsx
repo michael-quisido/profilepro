@@ -124,12 +124,40 @@ export default function IDCard({ customContent }: IDCardProps) {
           </button>
           
           <div style={{ padding: '30px 20px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px' }}>
-            <img 
-              src={profile.photo} 
-              alt={profile.name}
-              className="owner-photo"
-              style={{ width: '150px', height: '150px', borderRadius: '10px', objectFit: 'cover', border: '1px solid #333' }}
-            />
+            <div style={{ position: 'relative', display: 'inline-block' }}>
+              <img 
+                src={profile.photo} 
+                alt={profile.name}
+                className="owner-photo"
+                style={{ width: '150px', height: '150px', borderRadius: '10px', objectFit: 'cover', border: '1px solid #333', display: 'block' }}
+              />
+              <div className="snake-path">
+                <div style={{ 
+                  width: '7px', 
+                  height: '7px', 
+                  background: '#c9a227', 
+                  borderRadius: '50%', 
+                  position: 'absolute', 
+                  top: 0, 
+                  left: 0,
+                  animation: 'snakeRunClockwise 3s linear infinite',
+                  boxShadow: '0 0 8px #c9a227',
+                  zIndex: 999998
+                }}></div>
+                <div style={{ 
+                  width: '7px', 
+                  height: '7px', 
+                  background: '#c9a227', 
+                  borderRadius: '50%', 
+                  position: 'absolute', 
+                  top: 0, 
+                  left: 0,
+                  animation: 'snakeRunCounterClockwise 3s linear infinite',
+                  boxShadow: '0 0 8px #c9a227',
+                  zIndex: 999999
+                }}></div>
+              </div>
+            </div>
             
             <h2 style={{ fontSize: '20px', fontWeight: 'bold', color: '#333' }}>{profile.name}</h2>
             
@@ -164,7 +192,7 @@ export default function IDCard({ customContent }: IDCardProps) {
           </div>
         </div>
       ) : (
-        <div className="id-card swing-animation" style={{ display: 'flex', flexDirection: 'column' }}>
+        <div className="id-card swing-animation" style={{ display: 'flex', flexDirection: 'column', overflow: 'visible', position: 'relative', zIndex: 1 }}>
           <div style={{ position: 'relative', flex: 1 }}>
             <div style={{
               position: 'absolute',
@@ -177,7 +205,7 @@ export default function IDCard({ customContent }: IDCardProps) {
               pointerEvents: 'none',
             }} />
             
-            <div style={{ padding: '0 30px', position: 'relative', zIndex: 1 }}>
+            <div style={{ padding: '0 30px', position: 'relative' }}>
               <nav className="desktop-menu" style={{ display: 'flex', justifyContent: 'center', gap: '20px', marginBottom: '30px', paddingTop: '30px' }}>
                 {menuItems.map((item) => (
                   <Link
@@ -190,13 +218,41 @@ export default function IDCard({ customContent }: IDCardProps) {
                 ))}
               </nav>
 
-              <div className="id-card-content" style={{ display: 'flex', gap: '20px', alignItems: 'flex-start' }}>
-                <img 
-                  src={profile.photo} 
-                  alt={profile.name}
-                  className="owner-photo"
-                  style={{ width: '150px', height: '150px', borderRadius: '10px', objectFit: 'cover', flexShrink: 0, border: '1px solid #333' }}
-                />
+              <div className="id-card-content" style={{ display: 'flex', gap: '20px', alignItems: 'flex-start', position: 'relative', zIndex: 9999 }}>
+                <div style={{ position: 'relative', display: 'inline-block', flexShrink: 0 }}>
+                  <img 
+                    src={profile.photo} 
+                    alt={profile.name}
+                    className="owner-photo"
+                    style={{ width: '150px', height: '150px', borderRadius: '10px', objectFit: 'cover', border: '1px solid #333', display: 'block' }}
+                  />
+                  <div className="snake-path">
+                    <div style={{ 
+                      width: '7px', 
+                      height: '7px', 
+                      background: '#c9a227', 
+                      borderRadius: '50%', 
+                      position: 'absolute', 
+                      top: 0, 
+                      left: 0,
+                      animation: 'snakeRunClockwise 3s linear infinite',
+                      boxShadow: '0 0 8px #c9a227',
+                      zIndex: 999998
+                    }}></div>
+                    <div style={{ 
+                      width: '7px', 
+                      height: '7px', 
+                      background: '#c9a227', 
+                      borderRadius: '50%', 
+                      position: 'absolute', 
+                      top: 0, 
+                      left: 0,
+                      animation: 'snakeRunCounterClockwise 3s linear infinite',
+                      boxShadow: '0 0 8px #c9a227',
+                      zIndex: 999999
+                    }}></div>
+                  </div>
+                </div>
                 
                 <div className="info-section" style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '70px' }}>
                   <h2 style={{ fontSize: '32px', fontWeight: 'bold', color: '#333' }}>{profile.name}</h2>

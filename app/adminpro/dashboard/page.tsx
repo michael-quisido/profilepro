@@ -236,6 +236,9 @@ export default function AdminDashboard() {
           </div>
         </div>
       </div>
+      <div style={{ position: 'fixed', bottom: '10px', right: '20px', fontSize: '12px', color: '#888' }}>
+        Powered by: kmcq-whs.agila
+      </div>
     </div>
   );
 }

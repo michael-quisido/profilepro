@@ -5,7 +5,7 @@ import IDCard from "../components/IDCard";
 
 const defaultContact = `Phone Contact: 09940487911
 Email:         jhonaimaquisido@gmail.com
-               admin@jhona-quisido.com`;
+               mike082112@gmail.com`;
 
 export default function Contact() {
   const [contactInfo, setContactInfo] = useState(defaultContact);

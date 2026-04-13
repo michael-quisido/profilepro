@@ -24,7 +24,7 @@ export default function AdminDashboard() {
     photo: "/images/mommy_200x200.jpg",
     name: "Jhona Aima C. Quisido",
     title: "Expert/ Web Research Specialist",
-    email: "admin@jhona-quisido.com",
+    email: "mike082112@gmail.com",
     socialLinks: {
       facebook: "https://facebook.com",
       twitter: "https://twitter.com",

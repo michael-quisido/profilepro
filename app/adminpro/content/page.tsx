@@ -23,7 +23,7 @@ I am dedicated to helping businesses reach new heights by providing them with th
 Let me be your guide in building a robust network and maximizing your outreach potential. ;)`,
   contact: `Phone Contact: 09940487911
 Email:         jhonaimaquisido@gmail.com
-               admin@jhona-quisido.com`
+               mike082112@gmail.com`
 };
 
 export default function Content() {

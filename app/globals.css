@@ -1,0 +1,310 @@
+@import "tailwindcss";
+
+:root {
+  --primary: #1a1a1a;
+  --secondary: #2d2d2d;
+  --accent: #c9a227;
+  --text-light: #f5f5f5;
+  --text-muted: #a0a0a0;
+  --card-bg: #f8f9fa;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: var(--primary);
+  color: #333;
+  min-height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+@keyframes swing {
+  0% { transform: rotate(0deg); }
+  20% { transform: rotate(10deg); }
+  40% { transform: rotate(-8deg); }
+  60% { transform: rotate(6deg); }
+  80% { transform: rotate(-4deg); }
+  100% { transform: rotate(0deg); }
+}
+
+.swing-animation {
+  animation: swing 3s ease-in-out forwards;
+  transform-origin: top center;
+  overflow: visible;
+  position: relative;
+}
+
+.brick-wall {
+  min-height: 100vh;
+  height: auto;
+  position: relative;
+  overflow-y: auto;
+}
+
+.brick-wall::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('/images/brick-wall-finale.jpg');
+  background-size: 200px;
+  background-position: center;
+  background-repeat: repeat;
+}
+
+.id-card {
+  width: 677px;
+  height: auto;
+  min-height: auto;
+  background: linear-gradient(145deg, #ffffff, #f0f0f0);
+  border-radius: 20px;
+  box-shadow: 
+    0 10px 30px rgba(0,0,0,0.3),
+    inset 0 0 0 2px rgba(255,255,255,0.5);
+  overflow: visible;
+  position: relative;
+  z-index: 1;
+}
+
+.id-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #c9a227, #d4af37, #c9a227);
+  z-index: 0;
+  clip-path: polygon(0 0, 100% 0, 95% 100%, 5% 100%);
+}
+
+.id-card {
+  z-index: 1;
+}
+
+.menu-item {
+  color: #333;
+  font-weight: 600;
+  padding: 8px 16px;
+  text-decoration: none;
+  transition: all 0.3s;
+  border-radius: 5px;
+}
+
+.menu-item:hover {
+  background: #c9a227;
+  color: #ffffff;
+}
+
+.menu-item.active {
+  background: #c9a227;
+  color: #ffffff;
+}
+
+.social-icon {
+  width: 60px;
+  height: 60px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #333;
+  color: white;
+  text-decoration: none;
+  transition: transform 0.3s, background 0.3s;
+  box-shadow: inset 0 0 0 2px #c9a227;
+}
+
+.social-icon:hover {
+  transform: scale(1.1);
+  background: #c9a227;
+}
+
+.burger-menu {
+  display: none;
+  cursor: pointer;
+  padding: 10px;
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 100;
+}
+
+.burger-menu span {
+  display: block;
+  width: 25px;
+  height: 3px;
+  background: white;
+  margin: 5px 0;
+  transition: 0.3s;
+}
+
+.mobile-menu {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.95);
+  z-index: 1000;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.mobile-menu.active {
+  display: flex;
+}
+
+.mobile-menu a {
+  color: white;
+  font-size: 24px;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.mobile-menu .close-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 40px;
+  color: white;
+  cursor: pointer;
+}
+
+.owner-photo {
+  width: 150px;
+  height: 150px;
+  border-radius: 10px;
+  object-fit: cover;
+  border: 1px solid #333;
+  position: relative;
+  z-index: 1;
+}
+
+.circle-path {
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  width: 156px;
+  height: 156px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  pointer-events: none;
+  z-index: 99999 !important;
+  overflow: visible;
+}
+
+.circle-first {
+  display: none;
+}
+
+@keyframes circleRunClockwise {
+  0% {
+    transform: translate(0px, 0px) rotate(0deg);
+  }
+  25% {
+    transform: translate(150px, 0px) rotate(90deg);
+  }
+  50% {
+    transform: translate(150px, 150px) rotate(180deg);
+  }
+  75% {
+    transform: translate(0px, 150px) rotate(270deg);
+  }
+  100% {
+    transform: translate(0px, 0px) rotate(360deg);
+  }
+}
+
+.circle-first-second {
+  display: none;
+}
+
+@keyframes circleRunCounterClockwise {
+  0% {
+    transform: translate(0px, 0px) rotate(0deg);
+  }
+  25% {
+    transform: translate(0px, 150px) rotate(-90deg);
+  }
+  50% {
+    transform: translate(150px, 150px) rotate(-180deg);
+  }
+  75% {
+    transform: translate(150px, 0px) rotate(-270deg);
+  }
+  100% {
+    transform: translate(0px, 0px) rotate(-360deg);
+  }
+}
+
+@media (max-width: 768px) {
+  .desktop-menu {
+    display: none;
+  }
+  
+  .id-card {
+    width: 95%;
+    min-height: auto;
+    padding: 20px;
+    margin-top: 0px;
+  }
+  
+  .id-card .burger-menu {
+    display: block;
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background: #333;
+    border-radius: 5px;
+    padding: 8px;
+    margin-bottom: 60px;
+  }
+  
+  .id-card .burger-menu span {
+    background: white;
+    margin: 4px 0;
+  }
+  
+  .id-card .burger-menu + * {
+    margin-top: 40px;
+  }
+  
+  .id-card-content {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .social-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+  }
+  
+  .info-section {
+    align-items: center !important;
+    text-align: center !important;
+  }
+  
+  .email-section, .powered-section {
+    text-align: center !important;
+  }
+  
+  .brick-wall {
+    min-height: 100vh;
+    height: auto;
+    overflow-y: auto;
+  }
+}

@@ -29,11 +29,11 @@ const defaultProfile: ProfileData = {
   title: "Expert/ Web Research Specialist",
   email: "mike082112@gmail.com",
   socialLinks: {
-    facebook: "https://facebook.com",
-    twitter: "https://twitter.com",
-    instagram: "https://instagram.com",
-    linkedin: "https://linkedin.com",
-    github: "https://github.com",
+    facebook: "",
+    twitter: "",
+    instagram: "",
+    linkedin: "",
+    github: "",
   },
 };
 
@@ -41,30 +41,8 @@ export default function IDCard({ customContent }: IDCardProps) {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const [profile, setProfile] = useState<ProfileData | null>(null);
-  const [pageContent, setPageContent] = useState<{ projects: string[]; about: string; contact: string } | null>(null);
-
-  useEffect(() => {
-    const stored = localStorage.getItem('profileData');
-    if (stored) {
-      setProfile(JSON.parse(stored));
-    } else {
-      fetch('/api/profile')
-        .then(res => res.json())
-        .then(data => {
-          setProfile(data);
-          localStorage.setItem('profileData', JSON.stringify(data));
-        })
-        .catch(() => setProfile(defaultProfile));
-    }
-  }, []);
-
-  useEffect(() => {
-    const stored = localStorage.getItem('pageContent');
-    if (stored) {
-      setPageContent(JSON.parse(stored));
-    }
-  }, []);
+  const [profile, setProfile] = useState<ProfileData>(defaultProfile);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -75,7 +53,25 @@ export default function IDCard({ customContent }: IDCardProps) {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  if (!profile) {
+  useEffect(() => {
+    fetchProfile();
+  }, []);
+
+  const fetchProfile = async () => {
+    try {
+      const res = await fetch('/api/profile');
+      if (res.ok) {
+        const data = await res.json();
+        setProfile(data);
+      }
+    } catch (error) {
+      console.error('Error fetching profile:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
     return null;
   }
 

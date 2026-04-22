@@ -15,7 +15,8 @@ export default function About() {
   const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const [about, setAbout] = useState(defaultAbout);
+  const [about, setAbout] = useState("");
+  const [loading, setLoading] = useState(true);
   const [saved, setSaved] = useState(false);
   const quillRef = useRef<any>(null);
 
@@ -27,16 +28,36 @@ export default function About() {
   }, []);
 
   useEffect(() => {
-    const stored = localStorage.getItem('aboutContent');
-    if (stored) {
-      setAbout(stored);
-    }
+    fetchAbout();
   }, []);
 
-  const handleSave = () => {
-    localStorage.setItem('aboutContent', about);
-    setSaved(true);
-    setTimeout(() => setSaved(false), 2000);
+  const fetchAbout = async () => {
+    try {
+      const res = await fetch("/api/about");
+      if (res.ok) {
+        const data = await res.json();
+        setAbout(data.content || defaultAbout);
+      }
+    } catch (error) {
+      console.error('Error fetching about:', error);
+      setAbout(defaultAbout);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSave = async () => {
+    try {
+      await fetch("/api/about", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ content: about }),
+      });
+      setSaved(true);
+      setTimeout(() => setSaved(false), 2000);
+    } catch (error) {
+      console.error('Error saving about:', error);
+    }
   };
 
   const handleContentChange = (content: string) => {
@@ -52,6 +73,14 @@ export default function About() {
       ["clean"],
     ],
   };
+
+  if (loading) {
+    return (
+      <div style={{ minHeight: "100vh", background: "#f5f5f5", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <div style={{ color: "#333", fontSize: "18px" }}>Loading...</div>
+      </div>
+    );
+  }
 
   return (
     <div style={{ minHeight: "100vh", background: "#f5f5f5" }}>

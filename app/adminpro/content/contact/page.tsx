@@ -16,7 +16,8 @@ export default function Contact() {
   const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const [contact, setContact] = useState(defaultContact);
+  const [contact, setContact] = useState("");
+  const [loading, setLoading] = useState(true);
   const [saved, setSaved] = useState(false);
   const quillRef = useRef<any>(null);
 
@@ -28,16 +29,36 @@ export default function Contact() {
   }, []);
 
   useEffect(() => {
-    const stored = localStorage.getItem('contactContent');
-    if (stored) {
-      setContact(stored);
-    }
+    fetchContact();
   }, []);
 
-  const handleSave = () => {
-    localStorage.setItem('contactContent', contact);
-    setSaved(true);
-    setTimeout(() => setSaved(false), 2000);
+  const fetchContact = async () => {
+    try {
+      const res = await fetch("/api/contact");
+      if (res.ok) {
+        const data = await res.json();
+        setContact(data.content || defaultContact);
+      }
+    } catch (error) {
+      console.error('Error fetching contact:', error);
+      setContact(defaultContact);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSave = async () => {
+    try {
+      await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ content: contact }),
+      });
+      setSaved(true);
+      setTimeout(() => setSaved(false), 2000);
+    } catch (error) {
+      console.error('Error saving contact:', error);
+    }
   };
 
   const handleContentChange = (content: string) => {
@@ -53,6 +74,14 @@ export default function Contact() {
       ["clean"],
     ],
   };
+
+  if (loading) {
+    return (
+      <div style={{ minHeight: "100vh", background: "#f5f5f5", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <div style={{ color: "#333", fontSize: "18px" }}>Loading...</div>
+      </div>
+    );
+  }
 
   return (
     <div style={{ minHeight: "100vh", background: "#f5f5f5" }}>

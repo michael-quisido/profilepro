@@ -19,20 +19,23 @@ interface ProfileData {
   };
 }
 
+const defaultProfile: ProfileData = {
+  photo: "/images/mommy_200x200.jpg",
+  name: "Jhona Aima C. Quisido",
+  title: "Expert/ Web Research Specialist",
+  email: "mike082112@gmail.com",
+  socialLinks: {
+    facebook: "",
+    twitter: "",
+    instagram: "",
+    linkedin: "",
+    github: "",
+  },
+};
+
 export default function AdminDashboard() {
-  const [profile, setProfile] = useState<ProfileData>({
-    photo: "/images/mommy_200x200.jpg",
-    name: "Jhona Aima C. Quisido",
-    title: "Expert/ Web Research Specialist",
-    email: "mike082112@gmail.com",
-    socialLinks: {
-      facebook: "https://facebook.com",
-      twitter: "https://twitter.com",
-      instagram: "https://instagram.com",
-      linkedin: "https://linkedin.com",
-      github: "https://github.com",
-    },
-  });
+  const [profile, setProfile] = useState<ProfileData>(defaultProfile);
+  const [loading, setLoading] = useState(true);
   const [saved, setSaved] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
@@ -45,20 +48,49 @@ export default function AdminDashboard() {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
+  useEffect(() => {
+    fetchProfile();
+  }, []);
+
+  const fetchProfile = async () => {
+    try {
+      const res = await fetch("/api/profile");
+      if (res.ok) {
+        const data = await res.json();
+        setProfile(data);
+      }
+    } catch (error) {
+      console.error('Error fetching profile:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleSave = async () => {
-    await fetch("/api/profile", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(profile),
-    });
-    localStorage.setItem('profileData', JSON.stringify(profile));
-    setSaved(true);
-    setTimeout(() => setSaved(false), 2000);
+    try {
+      await fetch("/api/profile", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(profile),
+      });
+      setSaved(true);
+      setTimeout(() => setSaved(false), 2000);
+    } catch (error) {
+      console.error('Error saving profile:', error);
+    }
   };
 
   const handleLogout = () => {
     router.push("/adminpro");
   };
+
+  if (loading) {
+    return (
+      <div style={{ minHeight: "100vh", background: "#f5f5f5", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <div style={{ color: "#333", fontSize: "18px" }}>Loading...</div>
+      </div>
+    );
+  }
 
   return (
     <div style={{ minHeight: "100vh", background: "#f5f5f5" }}>

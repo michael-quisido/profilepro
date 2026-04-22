@@ -8,24 +8,20 @@ import ReactQuill from "react-quill-new";
 import "react-quill-new/dist/quill.snow.css";
 
 interface Project {
-  id: string;
+  id: number;
   title: string;
   description: string;
+  display_order: number;
 }
 
-const defaultProjects: Project[] = [
-  { id: "1", title: "Company Projects 1", description: "<p>Project description goes here...</p>" },
-  { id: "2", title: "Company Projects 2", description: "<p>Project description goes here...</p>" },
-  { id: "3", title: "Company Projects 3", description: "<p>Project description goes here...</p>" },
-  { id: "4", title: "Company Projects 4", description: "<p>Project description goes here...</p>" },
-  { id: "5", title: "Company Projects 5", description: "<p>Project description goes here...</p>" },
-];
+const defaultProjects: Project[] = [];
 
 export default function Projects() {
   const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const [projects, setProjects] = useState<Project[]>(defaultProjects);
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState(true);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [saved, setSaved] = useState(false);
   const quillRef = useRef<any>(null);
@@ -38,32 +34,71 @@ export default function Projects() {
   }, []);
 
   useEffect(() => {
-    const stored = localStorage.getItem('projectsContent');
-    if (stored) {
-      setProjects(JSON.parse(stored));
-    }
+    fetchProjects();
   }, []);
 
-  const handleSave = () => {
-    localStorage.setItem('projectsContent', JSON.stringify(projects));
-    setSaved(true);
-    setTimeout(() => setSaved(false), 2000);
+  const fetchProjects = async () => {
+    try {
+      const res = await fetch("/api/projects");
+      if (res.ok) {
+        const data = await res.json();
+        setProjects(data);
+      }
+    } catch (error) {
+      console.error('Error fetching projects:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSave = async () => {
+    if (!selectedProject) return;
+    try {
+      if (selectedProject.id) {
+        await fetch(`/api/projects/${selectedProject.id}`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            title: selectedProject.title,
+            description: selectedProject.description,
+          }),
+        });
+      } else {
+        await fetch("/api/projects/create", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            title: selectedProject.title,
+            description: selectedProject.description,
+          }),
+        });
+      }
+      await fetchProjects();
+      setSaved(true);
+      setTimeout(() => setSaved(false), 2000);
+    } catch (error) {
+      console.error('Error saving project:', error);
+    }
   };
 
   const handleAddProject = () => {
     const newProject: Project = {
-      id: Date.now().toString(),
+      id: 0,
       title: `New Project ${projects.length + 1}`,
       description: "<p>Enter project details...</p>",
+      display_order: projects.length,
     };
-    setProjects([...projects, newProject]);
     setSelectedProject(newProject);
   };
 
-  const handleDeleteProject = (id: string) => {
-    setProjects(projects.filter(p => p.id !== id));
-    if (selectedProject?.id === id) {
+  const handleDeleteProject = async (id: number) => {
+    if (!id) return;
+    try {
+      await fetch(`/api/projects/${id}`, { method: "DELETE" });
+      await fetchProjects();
       setSelectedProject(null);
+    } catch (error) {
+      console.error('Error deleting project:', error);
     }
   };
 
@@ -71,14 +106,12 @@ export default function Projects() {
     if (!selectedProject) return;
     const updated = { ...selectedProject, [field]: value };
     setSelectedProject(updated);
-    setProjects(projects.map(p => p.id === updated.id ? updated : p));
   };
 
   const handleContentChange = (content: string) => {
     if (!selectedProject) return;
     const updated = { ...selectedProject, description: content };
     setSelectedProject(updated);
-    setProjects(projects.map(p => p.id === updated.id ? updated : p));
   };
 
   const modules = {
@@ -90,6 +123,14 @@ export default function Projects() {
       ["clean"],
     ],
   };
+
+  if (loading) {
+    return (
+      <div style={{ minHeight: "100vh", background: "#f5f5f5", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <div style={{ color: "#333", fontSize: "18px" }}>Loading...</div>
+      </div>
+    );
+  }
 
   return (
     <div style={{ minHeight: "100vh", background: "#f5f5f5" }}>
@@ -182,18 +223,20 @@ export default function Projects() {
                 }}
               >
                 <span style={{ fontWeight: "500" }}>{project.title}</span>
-                <button
-                  onClick={(e) => { e.stopPropagation(); handleDeleteProject(project.id); }}
-                  style={{
-                    background: "transparent",
-                    border: "none",
-                    color: selectedProject?.id === project.id ? "white" : "#666",
-                    cursor: "pointer",
-                    fontSize: "18px"
-                  }}
-                >
-                  ×
-                </button>
+                {project.id > 0 && (
+                  <button
+                    onClick={(e) => { e.stopPropagation(); handleDeleteProject(project.id); }}
+                    style={{
+                      background: "transparent",
+                      border: "none",
+                      color: selectedProject?.id === project.id ? "white" : "#666",
+                      cursor: "pointer",
+                      fontSize: "18px"
+                    }}
+                  >
+                    ×
+                  </button>
+                )}
               </div>
             ))}
           </div>

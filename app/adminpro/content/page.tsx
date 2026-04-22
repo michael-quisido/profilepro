@@ -1,9 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { FaHome } from "react-icons/fa";
+import { FaHome, FaProjectDiagram, FaUser, FaEnvelope } from "react-icons/fa";
 
 interface ContentData {
   projects: string[];
@@ -18,20 +17,13 @@ const defaultContent: ContentData = {
     "Company projects11", "Company projects12", "Company projects13", "Company projects14", "Company projects15",
     "Company projects16", "Company projects17", "Company projects18", "Company projects19", "Company projects20"
   ],
-  about: `I excel in crafting and cultivating high-quality lists that drive exceptional results. With a keen eye for detail and an unwavering commitment to excellence, I employ my expertise in email search techniques to locate elusive contacts and valuable leads.
-I am dedicated to helping businesses reach new heights by providing them with the most accurate and targeted lists possible.
-Let me be your guide in building a robust network and maximizing your outreach potential. ;)`,
-  contact: `Phone Contact: 09940487911
-Email:         jhonaimaquisido@gmail.com
-               mike082112@gmail.com`
+  about: "I excel in crafting and cultivating high-quality lists that drive exceptional results.",
+  contact: "Phone: 09940487911\nEmail: jhonaimaquisido@gmail.com"
 };
 
-export default function Content() {
-  const router = useRouter();
+export default function ContentHub() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const [content, setContent] = useState<ContentData>(defaultContent);
-  const [saved, setSaved] = useState(false);
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth <= 768);
@@ -40,18 +32,11 @@ export default function Content() {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  useEffect(() => {
-    const stored = localStorage.getItem('pageContent');
-    if (stored) {
-      setContent(JSON.parse(stored));
-    }
-  }, []);
-
-  const handleSave = () => {
-    localStorage.setItem('pageContent', JSON.stringify(content));
-    setSaved(true);
-    setTimeout(() => setSaved(false), 2000);
-  };
+  const menuItems = [
+    { href: "/adminpro/content/projects", icon: <FaProjectDiagram />, label: "Projects" },
+    { href: "/adminpro/content/about", icon: <FaUser />, label: "About" },
+    { href: "/adminpro/content/contact", icon: <FaEnvelope />, label: "Contact" },
+  ];
 
   return (
     <div style={{ minHeight: "100vh", background: "#f5f5f5" }}>
@@ -76,7 +61,6 @@ export default function Content() {
           <Link href="/adminpro/content" onClick={() => setMenuOpen(false)} style={{ color: 'white', fontSize: '24px', textDecoration: 'none' }}>Content</Link>
           <Link href="/adminpro/credentials" onClick={() => setMenuOpen(false)} style={{ color: 'white', fontSize: '24px', textDecoration: 'none' }}>Credentials</Link>
           <Link href="/adminpro/monitoring" onClick={() => setMenuOpen(false)} style={{ color: 'white', fontSize: '24px', textDecoration: 'none' }}>Monitoring</Link>
-          <button onClick={() => { setMenuOpen(false); router.push("/adminpro"); }} style={{ padding: '10px 20px', background: '#c9a227', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer', fontSize: '18px' }}>Logout</button>
         </div>
       )}
       
@@ -102,7 +86,6 @@ export default function Content() {
             <Link href="/adminpro/content" style={{ color: "white", textDecoration: "none" }}>Content</Link>
             <Link href="/adminpro/credentials" style={{ color: "white", textDecoration: "none" }}>Credentials</Link>
             <Link href="/adminpro/monitoring" style={{ color: "white", textDecoration: "none" }}>Monitoring</Link>
-            <button onClick={() => router.push("/adminpro")} style={{ background: "#c9a227", border: "none", padding: "8px 15px", borderRadius: "5px", color: "white", cursor: "pointer" }}>Logout</button>
           </div>
         )}
       </nav>
@@ -110,52 +93,29 @@ export default function Content() {
       <div style={{ padding: "40px", maxWidth: "800px", margin: "0 auto" }}>
         <h2 style={{ marginBottom: "30px", color: "#333" }}>Content Management</h2>
         
-        <div style={{ background: "white", padding: "30px", borderRadius: "15px", marginBottom: "30px" }}>
-          <h3 style={{ marginBottom: "20px", color: "#333" }}>Projects (one per line)</h3>
-          <textarea
-            value={content.projects.join('\n')}
-            onChange={(e) => setContent({ ...content, projects: e.target.value.split('\n').filter(p => p.trim()) })}
-            rows={10}
-            style={{ width: "100%", padding: "10px", border: "1px solid #ddd", borderRadius: "8px", fontSize: "14px", fontFamily: "inherit" }}
-          />
-        </div>
-
-        <div style={{ background: "white", padding: "30px", borderRadius: "15px", marginBottom: "30px" }}>
-          <h3 style={{ marginBottom: "20px", color: "#333" }}>About</h3>
-          <textarea
-            value={content.about}
-            onChange={(e) => setContent({ ...content, about: e.target.value })}
-            rows={8}
-            style={{ width: "100%", padding: "10px", border: "1px solid #ddd", borderRadius: "8px", fontSize: "14px", fontFamily: "inherit" }}
-          />
-        </div>
-
-        <div style={{ background: "white", padding: "30px", borderRadius: "15px", marginBottom: "30px" }}>
-          <h3 style={{ marginBottom: "20px", color: "#333" }}>Contact</h3>
-          <textarea
-            value={content.contact}
-            onChange={(e) => setContent({ ...content, contact: e.target.value })}
-            rows={5}
-            style={{ width: "100%", padding: "10px", border: "1px solid #ddd", borderRadius: "8px", fontSize: "14px", fontFamily: "inherit" }}
-          />
-        </div>
-
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <button
-            onClick={handleSave}
-            style={{
-              padding: "12px 30px",
-              background: "#c9a227",
-              color: "white",
-              border: "none",
-              borderRadius: "8px",
-              cursor: "pointer",
-              fontSize: "16px"
-            }}
-          >
-            Save Changes
-          </button>
-          {saved && <span style={{ color: "green" }}>Saved successfully!</span>}
+        <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+          {menuItems.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "15px",
+                padding: "25px",
+                background: "white",
+                borderRadius: "15px",
+                textDecoration: "none",
+                color: "#333",
+                fontSize: "18px",
+                boxShadow: "0 2px 5px rgba(0,0,0,0.1)",
+                transition: "transform 0.2s, boxShadow 0.2s"
+              }}
+            >
+              <span style={{ color: "#c9a227", fontSize: "24px" }}>{item.icon}</span>
+              {item.label}
+            </Link>
+          ))}
         </div>
       </div>
       <div style={{ position: 'fixed', bottom: '10px', right: '20px', fontSize: '12px', color: '#888' }}>

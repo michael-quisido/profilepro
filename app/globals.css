@@ -352,4 +352,10 @@ body {
     width: auto !important;
     height: auto !important;
   }
+  
+  .custom-content-wrapper > div {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box;
+  }
 }

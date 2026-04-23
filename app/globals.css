@@ -324,4 +324,32 @@ body {
     height: auto;
     overflow-y: auto;
   }
+  
+  .id-card > div > div > div {
+    padding: 0 10px;
+  }
+  
+  .id-card .id-card-content + div,
+  .id-card [style*="marginTop"][style*="30px"] {
+    max-width: 100%;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    padding: 0 10px;
+    margin-top: 20px !important;
+  }
+  
+  .custom-content-wrapper {
+    max-width: 100% !important;
+    width: 100% !important;
+    padding: 0 10px !important;
+    box-sizing: border-box;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+  }
+  
+  .custom-content-wrapper img {
+    max-width: 100% !important;
+    width: auto !important;
+    height: auto !important;
+  }
 }

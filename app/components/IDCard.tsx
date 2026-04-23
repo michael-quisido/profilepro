@@ -255,7 +255,7 @@ export default function IDCard({ customContent }: IDCardProps) {
               </div>
 
               {customContent ? (
-                <div style={{ marginTop: '30px', textAlign: 'center', maxWidth: '500px', margin: '30px auto 0' }}>
+                <div className="custom-content-wrapper" style={{ marginTop: '30px', textAlign: 'center', maxWidth: '500px', margin: '30px auto 0', wordWrap: 'break-word', overflowWrap: 'break-word' }}>
                   {customContent}
                 </div>
               ) : (

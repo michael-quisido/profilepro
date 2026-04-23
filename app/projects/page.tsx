@@ -42,17 +42,22 @@ export default function Projects() {
             ) : projects.length === 0 ? (
               <div style={{ color: '#666', fontSize: '16px' }}>No projects available</div>
             ) : (
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '15px', justifyContent: 'center' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '15px', justifyContent: 'center', width: '100%' }}>
                 {projects.map((project) => (
-                  <span key={project.id} style={{ 
+                  <div key={project.id} style={{ 
                     background: '#333', 
                     color: 'white', 
-                    padding: '10px 15px', 
-                    borderRadius: '8px', 
-                    fontSize: '14px'
+                    padding: '15px', 
+                    borderRadius: '8px',
+                    width: '100%',
+                    maxWidth: '400px'
                   }}>
-                    {project.title}
-                  </span>
+                    <div style={{ fontSize: '16px', fontWeight: 'bold', marginBottom: '8px' }}>{project.title}</div>
+                    <div 
+                      style={{ fontSize: '14px', lineHeight: '1.5' }}
+                      dangerouslySetInnerHTML={{ __html: project.description }}
+                    />
+                  </div>
                 ))}
               </div>
             )

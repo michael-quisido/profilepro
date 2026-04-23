@@ -21,14 +21,6 @@ export interface Project {
   display_order: number;
 }
 
-export interface Visitor {
-  id: string;
-  ip: string;
-  region: string;
-  country: string;
-  timestamp: string;
-}
-
 export const defaultProfile: ProfileData = {
   photo: "/images/mommy_200x200.jpg",
   name: "Jhona Aima C. Quisido",
@@ -204,15 +196,80 @@ export async function updateContact(content: string): Promise<void> {
   }
 }
 
-let visitors: Visitor[] = [];
-
-export function addVisitor(visitor: Omit<Visitor, 'id'>): void {
-  visitors.push({
-    ...visitor,
-    id: Date.now().toString() + Math.random().toString(36).substr(2, 9),
-  });
+export interface Visitor {
+  id: number;
+  ip: string;
+  region: string;
+  country: string;
+  timestamp: string;
 }
 
-export function getVisitors(): Visitor[] {
-  return [...visitors];
+export async function getVisitors(): Promise<Visitor[]> {
+  try {
+    const db = await getDB();
+    const [rows] = await db.execute('SELECT * FROM visitors ORDER BY timestamp DESC');
+    return rows as Visitor[];
+  } catch (error) {
+    console.error('Error fetching visitors:', error);
+    return [];
+  }
+}
+
+export async function addVisitor(ip: string, region: string, country: string): Promise<void> {
+  try {
+    const db = await getDB();
+    await db.execute(
+      'INSERT INTO visitors (ip, region, country) VALUES (?, ?, ?)',
+      [ip, region, country]
+    );
+  } catch (error) {
+    console.error('Error adding visitor:', error);
+  }
+}
+
+export async function clearVisitors(): Promise<void> {
+  try {
+    const db = await getDB();
+    await db.execute('DELETE FROM visitors');
+  } catch (error) {
+    console.error('Error clearing visitors:', error);
+  }
+}
+
+export interface Credentials {
+  id: number;
+  username: string;
+  password: string;
+  verification_email: string;
+}
+
+export async function getCredentials(): Promise<Credentials> {
+  try {
+    const db = await getDB();
+    const [rows] = await db.execute('SELECT * FROM credentials WHERE id = 1');
+    const row = (rows as Credentials[])[0];
+    return row || { id: 1, username: 'admin', password: 'admin123', verification_email: 'mike082112@gmail.com' };
+  } catch (error) {
+    console.error('Error fetching credentials:', error);
+    return { id: 1, username: 'admin', password: 'admin123', verification_email: 'mike082112@gmail.com' };
+  }
+}
+
+export async function updateCredentials(username: string, password: string, verificationEmail?: string): Promise<void> {
+  try {
+    const db = await getDB();
+    if (verificationEmail) {
+      await db.execute(
+        'UPDATE credentials SET username = ?, password = ?, verification_email = ? WHERE id = 1',
+        [username, password, verificationEmail]
+      );
+    } else {
+      await db.execute(
+        'UPDATE credentials SET username = ?, password = ? WHERE id = 1',
+        [username, password]
+      );
+    }
+  } catch (error) {
+    console.error('Error updating credentials:', error);
+  }
 }

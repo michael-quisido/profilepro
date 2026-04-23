@@ -5,8 +5,16 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { FaHome } from "react-icons/fa";
 
+interface Credentials {
+  username: string;
+  password: string;
+  verification_email: string;
+}
+
 export default function Credentials() {
-  const [creds, setCreds] = useState({ username: "admin", password: "admin123" });
+  const defaultCreds: Credentials = { username: "admin", password: "admin123", verification_email: "mike082112@gmail.com" };
+  const [creds, setCreds] = useState<Credentials>(defaultCreds);
+  const [loading, setLoading] = useState(true);
   const [saved, setSaved] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
@@ -20,16 +28,39 @@ export default function Credentials() {
   }, []);
 
   useEffect(() => {
-    const stored = localStorage.getItem('adminCreds');
-    if (stored) {
-      setCreds(JSON.parse(stored));
-    }
+    fetchCredentials();
   }, []);
 
-  const handleSave = () => {
-    localStorage.setItem('adminCreds', JSON.stringify(creds));
-    setSaved(true);
-    setTimeout(() => setSaved(false), 2000);
+  const fetchCredentials = async () => {
+    try {
+      const res = await fetch("/api/credentials");
+      if (res.ok) {
+        const data = await res.json();
+        setCreds({ 
+          username: data.username, 
+          password: data.password,
+          verification_email: data.verification_email || "mike082112@gmail.com"
+        });
+      }
+    } catch (error) {
+      console.error('Error fetching credentials:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSave = async () => {
+    try {
+      await fetch("/api/credentials", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(creds),
+      });
+      setSaved(true);
+      setTimeout(() => setSaved(false), 2000);
+    } catch (error) {
+      console.error('Error saving credentials:', error);
+    }
   };
 
   return (
@@ -89,45 +120,62 @@ export default function Credentials() {
       <div style={{ padding: "40px", maxWidth: "800px", margin: "0 auto" }}>
         <h2 style={{ marginBottom: "30px", color: "#333" }}>Change Username & Password</h2>
         
-        <div style={{ background: "white", padding: "30px", borderRadius: "15px" }}>
-          <div style={{ marginBottom: "20px" }}>
-            <label style={{ display: "block", marginBottom: "5px", color: "#333", fontWeight: "600" }}>Username</label>
-            <input
-              type="text"
-              value={creds.username}
-              onChange={(e) => setCreds({ ...creds, username: e.target.value })}
-              style={{ width: "100%", padding: "10px", border: "1px solid #ddd", borderRadius: "8px" }}
-            />
+        {loading ? (
+          <div style={{ background: "white", padding: "30px", borderRadius: "15px", textAlign: "center" }}>
+            Loading...
           </div>
+        ) : (
+          <div style={{ background: "white", padding: "30px", borderRadius: "15px" }}>
+            <div style={{ marginBottom: "20px" }}>
+              <label style={{ display: "block", marginBottom: "5px", color: "#333", fontWeight: "600" }}>Username</label>
+              <input
+                type="text"
+                value={creds.username}
+                onChange={(e) => setCreds({ ...creds, username: e.target.value })}
+                style={{ width: "100%", padding: "10px", border: "1px solid #ddd", borderRadius: "8px" }}
+              />
+            </div>
 
-          <div style={{ marginBottom: "20px" }}>
-            <label style={{ display: "block", marginBottom: "5px", color: "#333", fontWeight: "600" }}>Password</label>
-            <input
-              type="password"
-              value={creds.password}
-              onChange={(e) => setCreds({ ...creds, password: e.target.value })}
-              style={{ width: "100%", padding: "10px", border: "1px solid #ddd", borderRadius: "8px" }}
-            />
-          </div>
+            <div style={{ marginBottom: "20px" }}>
+              <label style={{ display: "block", marginBottom: "5px", color: "#333", fontWeight: "600" }}>Password</label>
+              <input
+                type="password"
+                value={creds.password}
+                onChange={(e) => setCreds({ ...creds, password: e.target.value })}
+                style={{ width: "100%", padding: "10px", border: "1px solid #ddd", borderRadius: "8px" }}
+              />
+            </div>
 
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <button
-              onClick={handleSave}
-              style={{
-                padding: "12px 30px",
-                background: "#c9a227",
-                color: "white",
-                border: "none",
-                borderRadius: "8px",
-                cursor: "pointer",
-                fontSize: "16px"
-              }}
-            >
-              Save Credentials
-            </button>
-            {saved && <span style={{ color: "green" }}>Saved successfully!</span>}
+            <div style={{ marginBottom: "20px" }}>
+              <label style={{ display: "block", marginBottom: "5px", color: "#333", fontWeight: "600" }}>Verification Email</label>
+              <input
+                type="email"
+                value={creds.verification_email}
+                onChange={(e) => setCreds({ ...creds, verification_email: e.target.value })}
+                placeholder="Email for receiving verification codes"
+                style={{ width: "100%", padding: "10px", border: "1px solid #ddd", borderRadius: "8px" }}
+              />
+            </div>
+
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <button
+                onClick={handleSave}
+                style={{
+                  padding: "12px 30px",
+                  background: "#c9a227",
+                  color: "white",
+                  border: "none",
+                  borderRadius: "8px",
+                  cursor: "pointer",
+                  fontSize: "16px"
+                }}
+              >
+                Save Credentials
+              </button>
+              {saved && <span style={{ color: "green" }}>Saved successfully!</span>}
+            </div>
           </div>
-        </div>
+        )}
       </div>
       <div style={{ position: 'fixed', bottom: '10px', right: '20px', fontSize: '12px', color: '#888' }}>
         Powered by: kmcq-whs.agila

@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { FaHome } from "react-icons/fa";
 
 interface Visitor {
-  id: string;
+  id: number;
   ip: string;
   region: string;
   country: string;
@@ -15,6 +15,7 @@ interface Visitor {
 
 export default function Monitoring() {
   const [visitors, setVisitors] = useState<Visitor[]>([]);
+  const [loading, setLoading] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const router = useRouter();
@@ -27,13 +28,32 @@ export default function Monitoring() {
   }, []);
 
   useEffect(() => {
-    fetch("/api/visitors")
-      .then((res) => res.json())
-      .then((data) => setVisitors(data));
+    fetchVisitors();
   }, []);
 
-  const handleLogout = () => {
-    router.push("/adminpro");
+  const fetchVisitors = async () => {
+    try {
+      const res = await fetch("/api/visitors");
+      if (res.ok) {
+        const data = await res.json();
+        setVisitors(data);
+      }
+    } catch (error) {
+      console.error('Error fetching visitors:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleClear = async () => {
+    if (confirm("Are you sure you want to clear all visitor data?")) {
+      try {
+        await fetch("/api/visitors", { method: "DELETE" });
+        setVisitors([]);
+      } catch (error) {
+        console.error('Error clearing visitors:', error);
+      }
+    }
   };
 
   return (
@@ -91,7 +111,23 @@ export default function Monitoring() {
       </nav>
 
       <div style={{ padding: "40px", maxWidth: "1000px", margin: "0 auto" }}>
-        <h2 style={{ marginBottom: "30px", color: "#333" }}>Visitor Log</h2>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "30px" }}>
+          <h2 style={{ color: "#333", margin: 0 }}>Visitor Log</h2>
+          <button
+            onClick={handleClear}
+            style={{
+              padding: "10px 20px",
+              background: "#dc3545",
+              color: "white",
+              border: "none",
+              borderRadius: "8px",
+              cursor: "pointer",
+              fontSize: "14px"
+            }}
+          >
+            Clear All Data
+          </button>
+        </div>
         
         <div style={{ background: "white", padding: "20px", borderRadius: "15px", overflowX: "auto" }}>
           <table style={{ width: "100%", borderCollapse: "collapse" }}>
@@ -104,7 +140,13 @@ export default function Monitoring() {
               </tr>
             </thead>
             <tbody>
-              {visitors.length === 0 ? (
+              {loading ? (
+                <tr>
+                  <td colSpan={4} style={{ padding: "30px", textAlign: "center", color: "#888" }}>
+                    Loading...
+                  </td>
+                </tr>
+              ) : visitors.length === 0 ? (
                 <tr>
                   <td colSpan={4} style={{ padding: "30px", textAlign: "center", color: "#888" }}>
                     No visitors yet

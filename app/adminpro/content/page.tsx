@@ -1,29 +1,14 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { FaHome, FaProjectDiagram, FaUser, FaEnvelope } from "react-icons/fa";
-
-interface ContentData {
-  projects: string[];
-  about: string;
-  contact: string;
-}
-
-const defaultContent: ContentData = {
-  projects: [
-    "Company projects1", "Company projects2", "Company projects3", "Company projects4", "Company projects5",
-    "Company projects6", "Company projects7", "Company projects8", "Company projects9", "Company projects10",
-    "Company projects11", "Company projects12", "Company projects13", "Company projects14", "Company projects15",
-    "Company projects16", "Company projects17", "Company projects18", "Company projects19", "Company projects20"
-  ],
-  about: "I excel in crafting and cultivating high-quality lists that drive exceptional results.",
-  contact: "Phone: 09940487911\nEmail: jhonaimaquisido@gmail.com"
-};
 
 export default function ContentHub() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth <= 768);
@@ -61,6 +46,7 @@ export default function ContentHub() {
           <Link href="/adminpro/content" onClick={() => setMenuOpen(false)} style={{ color: 'white', fontSize: '24px', textDecoration: 'none' }}>Content</Link>
           <Link href="/adminpro/credentials" onClick={() => setMenuOpen(false)} style={{ color: 'white', fontSize: '24px', textDecoration: 'none' }}>Credentials</Link>
           <Link href="/adminpro/monitoring" onClick={() => setMenuOpen(false)} style={{ color: 'white', fontSize: '24px', textDecoration: 'none' }}>Monitoring</Link>
+          <button onClick={() => { setMenuOpen(false); router.push("/adminpro"); }} style={{ padding: '10px 20px', background: '#c9a227', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer', fontSize: '18px' }}>Logout</button>
         </div>
       )}
       
@@ -86,6 +72,7 @@ export default function ContentHub() {
             <Link href="/adminpro/content" style={{ color: "white", textDecoration: "none" }}>Content</Link>
             <Link href="/adminpro/credentials" style={{ color: "white", textDecoration: "none" }}>Credentials</Link>
             <Link href="/adminpro/monitoring" style={{ color: "white", textDecoration: "none" }}>Monitoring</Link>
+            <button onClick={() => router.push("/adminpro")} style={{ background: "#c9a227", border: "none", padding: "8px 15px", borderRadius: "5px", color: "white", cursor: "pointer" }}>Logout</button>
           </div>
         )}
       </nav>

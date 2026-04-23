@@ -67,6 +67,26 @@ export async function initDatabase() {
     )
   `);
 
+  await connection.execute(`
+    CREATE TABLE IF NOT EXISTS visitors (
+      id INT PRIMARY KEY AUTO_INCREMENT,
+      ip VARCHAR(50),
+      region VARCHAR(255),
+      country VARCHAR(255),
+      timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )
+  `);
+
+  await connection.execute(`
+    CREATE TABLE IF NOT EXISTS credentials (
+      id INT PRIMARY KEY DEFAULT 1,
+      username VARCHAR(255) DEFAULT 'admin',
+      password VARCHAR(255) DEFAULT 'admin123',
+      verification_email VARCHAR(255) DEFAULT 'mike082112@gmail.com',
+      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    )
+  `);
+
   const [profileRows] = await connection.execute('SELECT * FROM profile WHERE id = 1');
   if ((profileRows as any[]).length === 0) {
     await connection.execute(`
@@ -94,6 +114,20 @@ export async function initDatabase() {
     await connection.execute(`
       INSERT INTO contact (id, content) VALUES (1, '<p><strong>Phone:</strong> 09940487911</p><p><strong>Email:</strong> jhonaimaquisido@gmail.com</p><p><strong>Email:</strong> mike082112@gmail.com</p>')
     `);
+  }
+
+  const [credRows] = await connection.execute('SELECT * FROM credentials WHERE id = 1');
+  if ((credRows as any[]).length === 0) {
+    await connection.execute(`
+      INSERT INTO credentials (id, username, password, verification_email) VALUES (1, 'admin', 'admin123', 'mike082112@gmail.com')
+    `);
+  } else {
+    const credRow = (credRows as any[])[0];
+    if (!credRow.verification_email) {
+      await connection.execute(`
+        UPDATE credentials SET verification_email = 'mike082112@gmail.com' WHERE id = 1
+      `);
+    }
   }
 
   await connection.end();

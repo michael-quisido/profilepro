@@ -106,6 +106,7 @@ export default function Contact() {
           <Link href="/adminpro/content" onClick={() => setMenuOpen(false)} style={{ color: "white", fontSize: "24px", textDecoration: "none" }}>Content</Link>
           <Link href="/adminpro/credentials" onClick={() => setMenuOpen(false)} style={{ color: "white", fontSize: "24px", textDecoration: "none" }}>Credentials</Link>
           <Link href="/adminpro/monitoring" onClick={() => setMenuOpen(false)} style={{ color: "white", fontSize: "24px", textDecoration: "none" }}>Monitoring</Link>
+          <button onClick={() => { setMenuOpen(false); router.push("/adminpro"); }} style={{ padding: '10px 20px', background: '#c9a227', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer', fontSize: '18px' }}>Logout</button>
         </div>
       )}
 
@@ -134,6 +135,7 @@ export default function Contact() {
             <Link href="/adminpro/content" style={{ color: "white", textDecoration: "none" }}>Content</Link>
             <Link href="/adminpro/credentials" style={{ color: "white", textDecoration: "none" }}>Credentials</Link>
             <Link href="/adminpro/monitoring" style={{ color: "white", textDecoration: "none" }}>Monitoring</Link>
+            <button onClick={() => router.push("/adminpro")} style={{ background: "#c9a227", border: "none", padding: "8px 15px", borderRadius: "5px", color: "white", cursor: "pointer" }}>Logout</button>
           </div>
         )}
       </nav>

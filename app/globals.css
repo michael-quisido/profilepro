@@ -47,6 +47,23 @@ body {
   overflow-y: auto;
 }
 
+.ql-editor img,
+.ql-editor picture img,
+.id-card-content img,
+.project-description img,
+.about-content img,
+.contact-content img {
+  width: 177px !important;
+  height: auto !important;
+  max-width: 177px !important;
+  object-fit: contain;
+}
+
+.ql-editor image,
+.ql-editor picture {
+  display: block !important;
+}
+
 .brick-wall::before {
   content: '';
   position: absolute;

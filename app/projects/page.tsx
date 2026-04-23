@@ -47,8 +47,7 @@ export default function Projects() {
                 flexDirection: 'column', 
                 gap: '15px', 
                 alignItems: 'center',
-                width: '100%',
-                maxWidth: '500px'
+                width: '100%'
               }}>
                 {projects.map((project) => (
                   <div key={project.id} style={{ 
@@ -57,12 +56,13 @@ export default function Projects() {
                     padding: '15px', 
                     borderRadius: '8px',
                     width: '100%',
+                    maxWidth: '400px',
                     textAlign: 'center',
                     boxSizing: 'border-box'
                   }}>
                     <div style={{ fontSize: '16px', fontWeight: 'bold', marginBottom: '8px' }}>{project.title}</div>
                     <div 
-                      style={{ fontSize: '14px', lineHeight: '1.5', textAlign: 'left' }}
+                      style={{ fontSize: '14px', lineHeight: '1.5' }}
                       dangerouslySetInnerHTML={{ __html: project.description }}
                     />
                   </div>

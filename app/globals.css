@@ -47,12 +47,12 @@ body {
   overflow-y: auto;
 }
 
-.ql-editor img,
-.ql-editor picture img,
-.id-card-content img,
-.project-description img,
-.about-content img,
-.contact-content img {
+.ql-editor img:not(.owner-photo),
+.ql-editor picture img:not(.owner-photo),
+.id-card-content img:not(.owner-photo),
+.project-description img:not(.owner-photo),
+.about-content img:not(.owner-photo),
+.contact-content img:not(.owner-photo) {
   width: 177px !important;
   height: auto !important;
   max-width: 177px !important;

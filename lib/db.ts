@@ -2,9 +2,9 @@ import mysql from 'mysql2/promise';
 
 const dbConfig = {
   host: process.env.DB_HOST || 'localhost',
-  user: process.env.DB_USER || 'root',
-  password: process.env.DB_PASSWORD || 'IDprofileproAdimin777',
-  database: process.env.DB_NAME || 'profilepro_db',
+  user: process.env.DB_USER || 'jhon_root_db',
+  password: process.env.DB_PASSWORD || 'Thank_You_Lord_888',
+  database: process.env.DB_NAME || 'jhon_profilepro_db',
 };
 
 let pool: mysql.Pool | null = null;

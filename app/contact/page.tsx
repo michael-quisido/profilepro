@@ -40,7 +40,15 @@ export default function Contact() {
               <div style={{ color: '#666', fontSize: '16px' }}>Loading...</div>
             ) : (
               <div 
-                style={{ fontSize: '16px', color: '#333', lineHeight: '2' }}
+                style={{ 
+                  fontSize: '16px', 
+                  color: '#333', 
+                  lineHeight: '2',
+                  width: '100%',
+                  maxWidth: '100%',
+                  overflowWrap: 'break-word',
+                  wordWrap: 'break-word'
+                }}
                 dangerouslySetInnerHTML={{ __html: contactInfo }}
               />
             )

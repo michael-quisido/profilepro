@@ -40,7 +40,15 @@ export default function About() {
               <div style={{ color: '#666', fontSize: '16px' }}>Loading...</div>
             ) : (
               <div 
-                style={{ fontSize: '16px', color: '#333', lineHeight: '1.8' }}
+                style={{ 
+                  fontSize: '16px', 
+                  color: '#333', 
+                  lineHeight: '1.8',
+                  width: '100%',
+                  maxWidth: '100%',
+                  overflowWrap: 'break-word',
+                  wordWrap: 'break-word'
+                }}
                 dangerouslySetInnerHTML={{ __html: aboutText }}
               />
             )

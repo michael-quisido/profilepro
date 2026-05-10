@@ -159,7 +159,21 @@ export default function IDCard({ customContent }: IDCardProps) {
             
             <p style={{ fontSize: '16px', color: '#666', fontStyle: 'italic' }}>{profile.title}</p>
             
-            {customContent ? customContent : (
+            {customContent ? (
+              <div className="custom-content-wrapper" style={{ 
+                width: '100%', 
+                maxWidth: '100%', 
+                wordWrap: 'break-word', 
+                overflowWrap: 'break-word',
+                boxSizing: 'border-box',
+                padding: '0 10px',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center'
+              }}>
+                {customContent}
+              </div>
+            ) : (
               <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', flexWrap: 'wrap' }}>
                 {socialIcons.map((social) => (
                   social.url && (

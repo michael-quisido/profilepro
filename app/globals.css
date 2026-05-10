@@ -83,7 +83,6 @@ body {
     width: 100% !important;
     max-width: 100% !important;
     box-sizing: border-box !important;
-    margin: 0 0 16px 0 !important;
     word-wrap: normal;
     overflow-wrap: normal;
     white-space: normal;
@@ -384,7 +383,6 @@ body {
     width: 100% !important;
     max-width: 100% !important;
     box-sizing: border-box !important;
-    margin: 0 0 16px 0 !important;
   }
   
   .custom-content-wrapper > div[style*="flexDirection"] {

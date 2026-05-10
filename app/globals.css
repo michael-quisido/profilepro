@@ -341,9 +341,10 @@ body {
     width: 100% !important;
     padding: 0 10px !important;
     box-sizing: border-box;
+    text-align: center !important;
     display: flex !important;
     flex-direction: column !important;
-    align-items: flex-start !important;
+    align-items: center !important;
   }
   
   .custom-content-wrapper > div {

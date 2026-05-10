@@ -163,9 +163,10 @@ export default function IDCard({ customContent }: IDCardProps) {
               <div className="custom-content-wrapper" style={{ 
                 width: '100%', 
                 maxWidth: '100%', 
+                textAlign: 'center',
                 display: 'flex',
                 flexDirection: 'column',
-                alignItems: 'flex-start'
+                alignItems: 'center'
               }}>
                 {customContent}
               </div>
@@ -269,9 +270,10 @@ export default function IDCard({ customContent }: IDCardProps) {
                   marginTop: '30px', 
                   maxWidth: '100%', 
                   margin: '30px auto 0', 
+                  textAlign: 'center',
                   display: 'flex',
                   flexDirection: 'column',
-                  alignItems: 'flex-start'
+                  alignItems: 'center'
                 }}>
                   {customContent}
                 </div>

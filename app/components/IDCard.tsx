@@ -163,11 +163,10 @@ export default function IDCard({ customContent }: IDCardProps) {
               <div className="custom-content-wrapper" style={{ 
                 width: '100%', 
                 maxWidth: '100%', 
-                boxSizing: 'border-box',
-                padding: '0 10px',
+                paddingLeft: '30px',
                 display: 'flex',
                 flexDirection: 'column',
-                alignItems: 'center'
+                alignItems: 'flex-start'
               }}>
                 {customContent}
               </div>
@@ -269,12 +268,12 @@ export default function IDCard({ customContent }: IDCardProps) {
               {customContent ? (
                 <div className="custom-content-wrapper" style={{ 
                   marginTop: '30px', 
-                  textAlign: 'center', 
                   maxWidth: '100%', 
                   margin: '30px auto 0', 
+                  paddingLeft: '30px',
                   display: 'flex',
                   flexDirection: 'column',
-                  alignItems: 'center'
+                  alignItems: 'flex-start'
                 }}>
                   {customContent}
                 </div>

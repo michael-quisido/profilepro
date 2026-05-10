@@ -45,9 +45,7 @@ export default function Contact() {
                   color: '#333', 
                   lineHeight: '2',
                   width: '100%',
-                  maxWidth: '100%',
-                  overflowWrap: 'break-word',
-                  wordWrap: 'break-word'
+                  maxWidth: '100%'
                 }}
                 dangerouslySetInnerHTML={{ __html: contactInfo }}
               />

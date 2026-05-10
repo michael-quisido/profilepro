@@ -163,8 +163,6 @@ export default function IDCard({ customContent }: IDCardProps) {
               <div className="custom-content-wrapper" style={{ 
                 width: '100%', 
                 maxWidth: '100%', 
-                wordWrap: 'break-word', 
-                overflowWrap: 'break-word',
                 boxSizing: 'border-box',
                 padding: '0 10px',
                 display: 'flex',

@@ -272,8 +272,6 @@ export default function IDCard({ customContent }: IDCardProps) {
                   textAlign: 'center', 
                   maxWidth: '100%', 
                   margin: '30px auto 0', 
-                  wordWrap: 'break-word', 
-                  overflowWrap: 'break-word',
                   display: 'flex',
                   flexDirection: 'column',
                   alignItems: 'center'

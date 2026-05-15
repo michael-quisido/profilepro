@@ -39,7 +39,7 @@ export default function About() {
             loading ? (
               <div style={{ color: '#666', fontSize: '16px' }}>Loading...</div>
             ) : (
-              <div 
+               <div 
                 style={{ 
                   fontSize: '16px', 
                   color: '#333', 
@@ -47,7 +47,7 @@ export default function About() {
                   width: '100%',
                   maxWidth: '100%'
                 }}
-                dangerouslySetInnerHTML={{ __html: aboutText }}
+                dangerouslySetInnerHTML={{ __html: aboutText.replace(/&nbsp;/g, ' ') }}
               />
             )
           } />

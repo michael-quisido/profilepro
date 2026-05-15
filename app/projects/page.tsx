@@ -63,7 +63,7 @@ export default function Projects() {
                     <div style={{ fontSize: '16px', fontWeight: 'bold', marginBottom: '8px' }}>{project.title}</div>
                     <div 
                       style={{ fontSize: '14px', lineHeight: '1.5' }}
-                      dangerouslySetInnerHTML={{ __html: project.description }}
+                      dangerouslySetInnerHTML={{ __html: project.description.replace(/&nbsp;/g, ' ') }}
                     />
                   </div>
                 ))}

@@ -47,7 +47,7 @@ export default function Contact() {
                   width: '100%',
                   maxWidth: '100%'
                 }}
-                dangerouslySetInnerHTML={{ __html: contactInfo }}
+                dangerouslySetInnerHTML={{ __html: contactInfo.replace(/&nbsp;/g, ' ') }}
               />
             )
           } />

@@ -70,6 +70,8 @@ body {
     box-sizing: border-box !important;
     padding: 0 !important;
     text-align: center;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
 }
 
 .custom-content-wrapper > div {
@@ -77,15 +79,16 @@ body {
     max-width: 100% !important;
     box-sizing: border-box !important;
     padding: 0 !important;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
 }
 
 .custom-content-wrapper p {
     width: 100% !important;
     max-width: 100% !important;
     box-sizing: border-box !important;
-    word-wrap: normal;
-    overflow-wrap: normal;
-    white-space: normal;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
 }
 
 .brick-wall::before {

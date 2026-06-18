@@ -106,7 +106,7 @@ export default function ContentHub() {
         </div>
       </div>
       <div style={{ position: 'fixed', bottom: '10px', right: '20px', fontSize: '12px', color: '#888' }}>
-        Powered by: kmcq-whs.agila
+        Powered by: <Link href="https://kmcq-gmbh.com/" target="_blank" style={{ color: '#888', textDecoration: 'none' }}>KMCQ-GmbH Agila-WHS</Link>
       </div>
     </div>
   );

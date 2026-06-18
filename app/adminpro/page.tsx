@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 interface Credentials {
@@ -251,7 +252,7 @@ export default function AdminLogin() {
         )}
       </div>
       <div style={{ position: 'fixed', bottom: '10px', right: '20px', fontSize: '12px', color: '#888' }}>
-        Powered by: kmcq-whs.agila
+        Powered by: <Link href="https://kmcq-gmbh.com/" target="_blank" style={{ color: '#888', textDecoration: 'none' }}>KMCQ-GmbH Agila-WHS</Link>
       </div>
     </div>
   );

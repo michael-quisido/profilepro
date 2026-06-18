@@ -191,7 +191,7 @@ export default function IDCard({ customContent }: IDCardProps) {
             
             <div style={{ marginTop: '10px', width: '100%' }}>
               <p style={{ fontSize: '14px', color: '#333', textAlign: 'right' }}>{profile.email}</p>
-              <p style={{ fontSize: '12px', color: '#888', textAlign: 'right', marginTop: '2px' }}>Powered by: kmcq-whs.agila</p>
+              <p style={{ fontSize: '12px', color: '#888', textAlign: 'right', marginTop: '2px' }}>Powered by: <Link href="https://kmcq-gmbh.com/" target="_blank" style={{ color: '#888', textDecoration: 'none' }}>KMCQ-GmbH Agila-WHS</Link></p>
             </div>
           </div>
         </div>
@@ -300,7 +300,7 @@ export default function IDCard({ customContent }: IDCardProps) {
               </div>
 
               <div className="powered-section" style={{ textAlign: 'right', marginTop: '2px', marginBottom: '20px' }}>
-                <p style={{ fontSize: '12px', color: '#888' }}>Powered by: kmcq-whs.agila</p>
+                <p style={{ fontSize: '12px', color: '#888' }}>Powered by: <Link href="https://kmcq-gmbh.com/" target="_blank" style={{ color: '#888', textDecoration: 'none' }}>KMCQ-GmbH Agila-WHS</Link></p>
               </div>
             </div>
           </div>
